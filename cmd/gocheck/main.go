@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/sudo-sturbia/gocheck/pkg/checker"
-	"github.com/sudo-sturbia/gocheck/pkg/loader"
+	"github.com/hanglics/gocheck/pkg/checker"
+	"github.com/hanglics/gocheck/pkg/loader"
 )
 
 // Initialize program and parse command line flags

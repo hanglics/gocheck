@@ -10,7 +10,7 @@ import (
 	"sync"
 	"unicode"
 
-	"github.com/sudo-sturbia/gocheck/pkg/loader"
+	"github.com/hanglics/gocheck/pkg/loader"
 )
 
 var spellingErrors []string

@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/sudo-sturbia/gocheck/pkg/loader"
+	"github.com/hanglics/gocheck/pkg/loader"
 )
 
 var root *loader.Node
