@@ -47,7 +47,7 @@ func CheckFile(root *loader.Node, path string) {
 		textLine := fileScanner.Text()
 
 		Wg.Add(1)
-		go checkLine(root, textLine, lineNumber, wordEnd)
+		go CheckLine(root, textLine, lineNumber, wordEnd)
 
 		lineNumber++
 	}
@@ -58,7 +58,7 @@ func CheckFile(root *loader.Node, path string) {
 }
 
 // Find spelling errors in a line
-func checkLine(root *loader.Node, textLine string, lineNumber int, wordEnd func(c rune) bool) {
+func CheckLine(root *loader.Node, textLine string, lineNumber int, wordEnd func(c rune) bool) {
 	defer Wg.Done()
 
 	spellingErrorsInLine := make([]string, 0)
@@ -71,7 +71,7 @@ func checkLine(root *loader.Node, textLine string, lineNumber int, wordEnd func(
 				words[i] = strings.ToLower(words[i])
 			}
 
-			if !checkWord(root, words[i], 0) {
+			if !CheckWord(root, words[i], 0) {
 				// Add spelling error to list
 				spellingErrorsInLine = append(spellingErrorsInLine, fmt.Sprintf("At (%d, %d)  \"%s\"", lineNumber, i, words[i]))
 				hasErrors = true
@@ -88,7 +88,7 @@ func checkLine(root *loader.Node, textLine string, lineNumber int, wordEnd func(
 }
 
 // Check if a word exists in the dictionary
-func checkWord(root *loader.Node, word string, charNumber int) bool {
+func CheckWord(root *loader.Node, word string, charNumber int) bool {
 
 	if charNumber == len(word) {
 		return root.IsWord
@@ -102,7 +102,7 @@ func checkWord(root *loader.Node, word string, charNumber int) bool {
 			if charNumber == 0 {
 				// Pass character as uppercase
 				if root.Children[word[charNumber]] != nil {
-					return checkWord(root.Children[word[charNumber]], word, charNumber+1)
+					return CheckWord(root.Children[word[charNumber]], word, charNumber+1)
 				}
 			}
 
@@ -110,7 +110,7 @@ func checkWord(root *loader.Node, word string, charNumber int) bool {
 		} else {
 			// Check if character exists
 			if root.Children[word[charNumber]-FIRST_PRINTABLE_ASCII] != nil {
-				return checkWord(root.Children[word[charNumber]-FIRST_PRINTABLE_ASCII], word, charNumber+1)
+				return CheckWord(root.Children[word[charNumber]-FIRST_PRINTABLE_ASCII], word, charNumber+1)
 			}
 
 			return false
